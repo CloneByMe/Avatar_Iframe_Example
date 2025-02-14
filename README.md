@@ -42,4 +42,4 @@ If you want to improve this example or adapt it to your needs, feel free to subm
 
 License
 -------
-[Specify your license here, if applicable]
+Unlicense
