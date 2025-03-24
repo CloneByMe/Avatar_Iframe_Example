@@ -128,6 +128,16 @@
       }
     }
 
+    // Set state of the typing dots (Opcional)
+    function setStateOfTypingDots(value) {
+      const iframe = document.getElementById("chat-iframe");
+      const state = value ? 'SHOW_TYPING_DOTS' : 'HIDE_TYPING_DOTS';
+      console.log(state);
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: state}, "*");
+      }
+    }
+
     // Send message when button is clicked
     document.getElementById("send-button").addEventListener("click", () => {
       const input = document.getElementById("message-input");
