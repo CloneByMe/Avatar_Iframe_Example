@@ -83,6 +83,7 @@
   </div>
 
   <script>
+
     // Listen for messages from the iframe
     window.addEventListener("message", (event) => {
       if (event.data.type === "AVATAR_READY") {
@@ -128,16 +129,6 @@
       }
     }
 
-    // Set state of the typing dots (Opcional)
-    function setStateOfTypingDots(value) {
-      const iframe = document.getElementById("chat-iframe");
-      const state = value ? 'SHOW_TYPING_DOTS' : 'HIDE_TYPING_DOTS';
-      console.log(state);
-      if (iframe && iframe.contentWindow) {
-        iframe.contentWindow.postMessage({ type: state}, "*");
-      }
-    }
-
     // Send message when button is clicked
     document.getElementById("send-button").addEventListener("click", () => {
       const input = document.getElementById("message-input");
@@ -155,6 +146,28 @@
         document.getElementById("send-button").click();
       }
     });
+
+
+    // OPCIONAL //
+    // Set state of the typing dots (Opcional)
+    function setStateOfTypingDots(value) {
+      const iframe = document.getElementById("chat-iframe");
+      const state = value ? 'SHOW_TYPING_DOTS' : 'HIDE_TYPING_DOTS';
+      
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: state}, "*");
+        console.log(state);
+      }
+    }
+
+    // Set state of the Messages container (Opcional)
+    function showMessagesContainer(state) {
+      const iframe = document.getElementById("chat-iframe");
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ type: "SHOW_MESSAGES_CONTAINER", state: state },"*");
+      }
+    }
+
   </script>
 </body>
 </html>
