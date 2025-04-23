@@ -1,45 +1,112 @@
-Avatar Integration Example
-==========================
+# 🧠 Avatar Integration Example | CloneByMe
 
-This project is a demonstration of how to integrate our avatars into a website via an iframe. The example shows how to:
+This project demonstrates how to embed a CloneByMe avatar into a webpage using an iframe. It allows full bidirectional communication: receive messages like text and images from the avatar, and send spoken responses back.
 
-- Receive Messages: Listen for messages from the iframe (e.g., questions and images).
-- Send Messages: Send text to the avatar for it to speak.
+---
 
-Features
---------
-- Embedded Iframe: Loads the avatar chat widget.
-- Bidirectional Communication: Uses postMessage for message exchange between the parent page and the iframe.
+## 🚀 Features
 
-Getting Started
----------------
-1. Clone the Repository:
+- Interactive avatar embedded using an iframe.
+- Real-time message exchange using `postMessage`.
+- Displays received text and images from the avatar.
+- Sends text input to the avatar for spoken output.
+- Optional controls for advanced UI customization inside the iframe.
 
+---
+
+## 🛠️ Installation & Usage
+
+1. **Clone this repository**:
+   ```bash
    git clone https://github.com/yourusername/avatar-integration.git
+   cd avatar-integration
+   ```
 
-2. Configure the Avatar Token:
+2. **Configure your avatar token**:  
+   Open the `index.html` file and replace the following line:
 
-   Open the index.html file and replace [YOUR_AVATAR_TOKEN] in the iframe URL with your actual avatar token.
+   ```js
+   const AVATAR_TOKEN = "[YOUR CLONEBYME PARTNER TOKEN]";
+   ```
 
-3. Run the Example:
+   Get your token from your account at [CloneByMe](https://app.clonebyme.com) under the Share page of your avatar.
 
-   Open the index.html file in your browser (either directly or using a local web server).
+3. **Open the file in your browser**:  
+   You can run the project by simply opening `index.html` in a web browser.
 
-How It Works
-------------
-The iframe loads the chat widget from:
+---
 
-   https://app.clonebyme.com/chat-widget?avatar=[YOUR_AVATAR_TOKEN]
+## ⚙️ How It Works
 
-The JavaScript in the page handles:
+- The avatar chat widget is loaded from:
+  ```
+  https://app.clonebyme.com/chat-widget?avatar=[YOUR_AVATAR_TOKEN]
+  ```
 
-- Listening for Messages: It listens for messages from the iframe and displays them in the appropriate section.
-- Sending Messages: It sends text entered by the user to the iframe so that the avatar can speak it.
+- **Receiving Messages**:
+  - `NEW_QUESTION`: A text message from the user inside the iframe.
+  - `NEW_IMAGE`: A base64 image string received from the iframe.
 
-Contributing
-------------
-If you want to improve this example or adapt it to your needs, feel free to submit a pull request or open an issue.
+- **Sending Messages**:
+  - `TALK`: Sends a string of text to the avatar so it can speak it aloud.
 
-License
--------
+---
+
+## 💬 Message Flow Examples
+
+**Send a message to the avatar**:
+```js
+iframe.contentWindow.postMessage({ type: "TALK", message: "Hello there!" }, "*");
+```
+
+**Listen for a question from the iframe**:
+```js
+window.addEventListener("message", (event) => {
+  if (event.data?.type === "NEW_QUESTION") {
+    console.log("Received question:", event.data.message);
+  }
+});
+```
+
+**Listen for an image**:
+```js
+window.addEventListener("message", (event) => {
+   if (event.data?.type === "NEW_IMAGE") {
+   const imageSrc = event.data.imageBase64;
+   // Display or handle image
+   }
+});
+```
+
+---
+
+## 🧩 Optional Features
+
+- `setStateOfTypingDots(true/false)`: Toggle visibility of typing indicator dots inside the iframe.
+- `showMessagesContainer(true/false)`: Show or hide the message container in the iframe.
+- `showClearConversationBtn(true/false)`: Show or hide the clear conversation button inside the iframe.
+
+---
+
+## 🤖 Requirements
+
+- An account on [CloneByMe](https://app.clonebyme.com).
+- A valid avatar token.
+- Basic understanding of HTML and JavaScript.
+
+---
+
+## 🤝 Contributing
+
+Feel free to open an issue or submit a pull request to improve or adapt this integration example.
+
+---
+
+## 📄 License
+
 Unlicense
+
+---
+
+Build rich, interactive experiences by embedding CloneByMe avatars into your web projects!
+
