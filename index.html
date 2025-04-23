@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Avatar Iframe CloneByMe</title>
+  <title>Avatar Iframe | CloneByMe</title>
   <style>
     /* Container with two panels */
     .container {
@@ -55,7 +55,6 @@
     <!-- Left panel: Chat Iframe -->
     <div class="left-panel">
         <iframe id="chat-iframe" 
-            src="https://app.clonebyme.com/chat-widget?avatar=[YOUR AVATAR CODE]" 
             style="width: 100%; height: 100%; border: none;" 
             allow="camera; microphone">
         </iframe>
@@ -81,26 +80,37 @@
       </div>
     </div>
   </div>
-
   <script>
+    
+    // 🔧 Configuration
+    // Set your unique avatar token
+    const AVATAR_TOKEN = "[YOUR CLONEBYME PARTNER TOKEN]";
 
+
+    // Dynamically set src
+    const iframe = document.getElementById("chat-iframe");
+    iframe.src = `https://app.clonebyme.com/chat-widget?avatar=${AVATAR_TOKEN}`;
+    
     // Listen for messages from the iframe
-    window.addEventListener("message", (event) => {
-      if (event.data.type === "AVATAR_READY") {
-        console.log(event.data);
-        console.log("The avatar is ready.");
-      }
-      if (event.data.type === "NEW_QUESTION") {
-        addMessage("Question: " + event.data.message);
-        console.log(event.data);
-      }
-      if (event.data.type === "NEW_IMAGE") {
-        addImage(event.data.imageBase64);
-        console.log("You have received an image.");
-      }
-      if (event.data.type === "STOP_TALKING") {
-        console.log(event.data);
-        console.log("The avatar has stopped speaking.");
+    window.addEventListener("message", async (event) => {
+      switch (event.data.type) {
+        case "AVATAR_READY":
+          console.log(event.data);
+          break;
+
+        case "NEW_QUESTION":
+          console.log(event.data);
+          addMessage("Question: " + event.data.message);
+          break;
+
+        case "NEW_IMAGE":
+          console.log(event.data.imageBase64);
+          addImage(event.data.imageBase64);
+          break;
+
+        case "STOP_TALKING":
+          console.log(event.data);
+          break;
       }
     });
 
@@ -148,8 +158,18 @@
     });
 
 
-    // OPCIONAL //
-    // Set state of the typing dots (Opcional)
+
+
+    // 🧩 Optional Features
+    // These functions allow additional control over the chat UI inside the avatar iframe.
+    // You can choose to call them depending on your specific use case.
+
+
+
+    /**
+     * Toggles the visibility of typing dots in the chat interface inside the iframe.
+     * @param {boolean} value - Whether to show (`true`) or hide (`false`) the typing dots.
+    */
     function setStateOfTypingDots(value) {
       const iframe = document.getElementById("chat-iframe");
       const state = value ? 'SHOW_TYPING_DOTS' : 'HIDE_TYPING_DOTS';
@@ -160,13 +180,31 @@
       }
     }
 
-    // Set state of the Messages container (Opcional)
+    /**
+     * Shows or hides the messages container within the iframe chat interface.
+     * @param {boolean} state - Whether to show (`true`) or hide (`false`) the container.
+    */
     function showMessagesContainer(state) {
       const iframe = document.getElementById("chat-iframe");
       if (iframe && iframe.contentWindow) {
         iframe.contentWindow.postMessage({ type: "SHOW_MESSAGES_CONTAINER", state: state },"*");
       }
     }
+
+    /**
+     * Shows or hides the recicle bin within the iframe chat interface.
+     * @param {boolean} state - Whether to show (`true`) or hide (`false`) the Trash button.
+    */
+    function showClearConversationBtn(state) {
+        const iframe = document.getElementById("chat-iframe");
+        if (iframe && iframe.contentWindow) {
+          iframe.contentWindow.postMessage(
+            { type: "SHOW_CLEAR_CONVERSATION_BTN", state: state },
+            "*"
+          );
+        } 
+      }
+
 
   </script>
 </body>
