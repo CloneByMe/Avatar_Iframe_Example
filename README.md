@@ -18,8 +18,8 @@ This project demonstrates how to embed a CloneByMe avatar into a webpage using a
 
 1. **Clone this repository**:
    ```bash
-   git clone https://github.com/yourusername/avatar-integration.git
-   cd avatar-integration
+   git clone https://github.com/CloneByMe/Avatar_Iframe_Example.git
+   cd Avatar_Iframe_Example
    ```
 
 2. **Configure your avatar token**:  
