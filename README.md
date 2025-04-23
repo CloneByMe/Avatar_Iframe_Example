@@ -96,12 +96,6 @@ window.addEventListener("message", (event) => {
 
 ---
 
-## 🤝 Contributing
-
-Feel free to open an issue or submit a pull request to improve or adapt this integration example.
-
----
-
 ## 📄 License
 
 Unlicense
